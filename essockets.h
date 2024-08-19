@@ -199,7 +199,6 @@ namespace web {
 
             return 0;
         }
-
     };
 
     class client {
