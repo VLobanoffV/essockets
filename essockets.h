@@ -19,7 +19,6 @@ namespace web {
         SOCKET ListenSocket = INVALID_SOCKET;                
 
         int result = 0;
-        const char* sendBuffer = "Hello from Server";        
         char recvBuffer[512] = "";                           
 
 
@@ -148,7 +147,7 @@ namespace web {
             return 0;
         }
 
-        int GetUpdates() {
+        int GetUpdates(const char message[512]) {
 
             do
             {
@@ -161,7 +160,7 @@ namespace web {
                     std::cout << "Received " << result << " bytes" << std::endl;
                     std::cout << "Received data: " << recvBuffer << std::endl;
 
-                    result = send(ClientSocket, sendBuffer, (int)strlen(sendBuffer), 0);
+                    result = send(ClientSocket, message, (int)strlen(message), 0);
                     if (result == SOCKET_ERROR)
                     {
                         std::cout << "Failed to send data back" << std::endl;
@@ -209,7 +208,6 @@ namespace web {
         SOCKET ClientSocket = INVALID_SOCKET;                
 
         int result = 0;
-        const char* sendBuffer = "Hello from Server";        
         char recvBuffer[512] = "";                           
 
     public:
@@ -294,9 +292,9 @@ namespace web {
             return 0;
         }
 
-        int Send() {
+        int Send(const char message[512]) {
 
-            result = send(ClientSocket, sendBuffer, (int)strlen(sendBuffer), 0);
+            result = send(ClientSocket, message, (int)strlen(message), 0);
 
             if (result == SOCKET_ERROR)
             {
