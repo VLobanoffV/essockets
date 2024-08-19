@@ -28,14 +28,11 @@ namespace web {
     public:
         server(ADDRINFO* addrinfo) {
             
-
             ZeroMemory(&hints, sizeof(hints));              
             hints.ai_family = addrinfo->ai_family;                            
             hints.ai_socktype = addrinfo->ai_socktype;    
             hints.ai_protocol = addrinfo->ai_protocol;  
             hints.ai_flags = addrinfo->ai_flags;        
-
-
 
         }
 

@@ -3,10 +3,10 @@
 int main() {
 
 	ADDRINFO addr;
-	addr.ai_family = AF_INET;         // бшанп яелеиярбю опнрнйнкнб,                   AF_INET     - IpV4
-	addr.ai_socktype = SOCK_STREAM;   // бшанп онксвюелнцн янйерю,                     SOCK_STREAM - онрнйнбши янйер
-	addr.ai_protocol = IPPROTO_TCP;   // бшанп хяонкэгселнцн опнрнйнкю,                IPPROTO_TCP - Tcp/IP
-	addr.ai_flags = AI_PASSIVE;       // онксвемхе хмтнплюжхх дкъ оюяяхбмни ярнпнмш    AI_PASSIVE  - оюяяхбмне онксвемхе
+	addr.ai_family = AF_INET;         
+	addr.ai_socktype = SOCK_STREAM;   
+	addr.ai_protocol = IPPROTO_TCP;   
+	addr.ai_flags = AI_PASSIVE;       
 
 	web::server server(&addr);
 	server.SetWSADATA();
