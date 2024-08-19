@@ -1,5 +1,5 @@
 # essockets
-This library help to learning for sockets on Windows.
+This library help to create sockets on Windows.
 
 ## server.cpp
 ```cpp
