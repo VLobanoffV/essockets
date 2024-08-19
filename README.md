@@ -3,6 +3,8 @@ Easy sockets on Windows
 
 ## server.cpp
 ```cpp
+#include "essockets.h"
+
 int main() {
 
 	ADDRINFO addr;
@@ -28,6 +30,8 @@ int main() {
 
 ## client.cpp
 ```cpp
+#include "essockets.h"
+
 int main() {
 
 	ADDRINFO addr;
