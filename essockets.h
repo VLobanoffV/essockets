@@ -13,25 +13,25 @@ namespace web {
     class server {
 
         WSADATA wsaDta;
-        ADDRINFO hints;                                      
-        ADDRINFO* addrResult = NULL;                         
-        SOCKET ClientSocket = INVALID_SOCKET;                
-        SOCKET ListenSocket = INVALID_SOCKET;                
+        ADDRINFO hints;
+        ADDRINFO* addrResult = NULL;
+        SOCKET ClientSocket = INVALID_SOCKET;
+        SOCKET ListenSocket = INVALID_SOCKET;
 
         int result = 0;
-        char recvBuffer[512] = "";                           
+        char recvBuffer[512] = "";
 
 
 
 
     public:
         server(ADDRINFO* addrinfo) {
-            
-            ZeroMemory(&hints, sizeof(hints));              
-            hints.ai_family = addrinfo->ai_family;                            
-            hints.ai_socktype = addrinfo->ai_socktype;    
-            hints.ai_protocol = addrinfo->ai_protocol;  
-            hints.ai_flags = addrinfo->ai_flags;        
+
+            ZeroMemory(&hints, sizeof(hints));
+            hints.ai_family = addrinfo->ai_family;
+            hints.ai_socktype = addrinfo->ai_socktype;
+            hints.ai_protocol = addrinfo->ai_protocol;
+            hints.ai_flags = addrinfo->ai_flags;
 
         }
 
@@ -185,6 +185,35 @@ namespace web {
             return 0;
         }
 
+        int GetUpdates() {
+
+            do
+            {
+                ZeroMemory(recvBuffer, 512);
+
+                result = recv(ClientSocket, recvBuffer, 512, 0);
+
+                if (result > 0)
+                {
+                    std::cout << "Received " << result << " bytes" << std::endl;
+                    std::cout << "Received data: " << recvBuffer << std::endl;
+
+                }
+                else if (result == 0)
+                {
+                    std::cout << "Connection closing..." << std::endl;
+                }
+                else {
+                    std::cout << "Recv failed with error: " << result << std::endl;
+                    ReleaseResources();
+
+                    return 1;
+                }
+            } while (result > 0);
+
+            return 0;
+        }
+
         int CloseForSending() {
 
             result = shutdown(ClientSocket, SD_SEND);
@@ -203,12 +232,12 @@ namespace web {
     class client {
 
         WSADATA wsaDta;
-        ADDRINFO hints;                                      
-        ADDRINFO* addrResult = NULL;                         
-        SOCKET ClientSocket = INVALID_SOCKET;                
+        ADDRINFO hints;
+        ADDRINFO* addrResult = NULL;
+        SOCKET ClientSocket = INVALID_SOCKET;
 
         int result = 0;
-        char recvBuffer[512] = "";                           
+        char recvBuffer[512] = "";
 
     public:
         client(ADDRINFO* addrinfo) {
@@ -242,7 +271,7 @@ namespace web {
 
             int result;
             result = WSAStartup(MAKEWORD(2, 2), &wsaDta);
-            
+
             if (result != 0)
             {
                 std::cout << "WSAStartup failed, result: " << result << std::endl;
@@ -253,11 +282,11 @@ namespace web {
 
         int CheckSocket(PCSTR port) {
 
-            result = getaddrinfo("localhost", port, &hints, &addrResult); 
+            result = getaddrinfo("localhost", port, &hints, &addrResult);
             if (result != 0)
             {
                 std::cout << "getaddrinfo() failed, with error: " << result << std::endl;
-                WSACleanup(); 
+                WSACleanup();
                 return 1;
             }
             return 0;
@@ -280,7 +309,7 @@ namespace web {
 
         int CheckConnection() {
 
-            result = connect(ClientSocket, addrResult->ai_addr, (int)addrResult->ai_addrlen); 
+            result = connect(ClientSocket, addrResult->ai_addr, (int)addrResult->ai_addrlen);
 
             if (result == SOCKET_ERROR)
             {
