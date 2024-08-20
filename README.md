@@ -1,7 +1,7 @@
 # essockets
 This library help to create sockets on Windows.
 
-## server.cpp
+## server.cpp example
 ```cpp
 #include "essockets.h"
 
@@ -28,7 +28,7 @@ int main() {
 }
 ```
 
-## client.cpp
+## client.cpp example
 ```cpp
 #include "essockets.h"
 
